@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+    <div class="col-12 tm-block-col">
+                    <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
+                        <h2 class="tm-block-title">Orders List</h2>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col"> NO. Commande</th>
+                                    <th scope="col">STATUS</th>
+                                    <th scope="col">Produit</th>
+                                    <th scope="col">Categorie</th>
+                                    <th scope="col">DISTANCE</th>
+                                    <th scope="col">DATE Commande</th>
+                                    <th scope="col">EST DELIVERY DUE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for order in orders %}
+                                {% if order.personnel == user %}
+                                <tr>
+                                    <th scope="row"><b>#122349{{order.id}}</b></th>
+                                    <td>
+                                        <div class="tm-status-circle moving">
+                                        </div>Moving
+                                    </td>
+                                    <td><b>{{order.produit.nom}}</b></td>
+                                    <td><b>{{ order.produit.categorie }}</b></td>
+                                    <td><b>{{ order.quantité }}</b></td>
+                                    <td>1{{order.date}}</td>
+                                    <td>08:00, 18 NOV 2018</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+{% endif %}
+{% endblock content %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %} Register page {% endblock title %}
+{% block content %}
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-md-6 offset-md-3">
+                <div class="border p-3">
+                    <h3>Inscription page</h3>
+                    <!-- <p>Please fill in the following </p> -->
+                    <hr>
+                    {% load crispy_forms_tags %}
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        {{form|crispy}}
+                        <button type="submit" class="btn btn-primary mt-3">Inscription</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

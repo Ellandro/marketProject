@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+    <div class="container mt-5">
+      {% for message in messages %}
+              {% if message %}
+              <div class="col-12">
+                <h2 class="tm-block-title d-inline-block">message</h2>
+              </div>
+              {% endif %}
+              {% endfor %}
+      <div class="row tm-content-row">
+        <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 tm-block-col ">
+          <div class="tm-bg-primary-dark tm-block tm-block-products col-12 tm-block-col ">
+            <div class="tm-product-table-container">
+              <table class="table table-hover tm-table-small tm-product-table">
+                <thead>
+                  <tr>
+                    <th scope="col">PRODUIT</th>
+                    <th scope="col">CATEGORIE</th>
+                    <th scope="col">PRIX </th>
+
+                    <th scope="col"> DATE D'EXPIRATION</th>
+                    <th scope="col">ACTION</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  {% for prod in items %}
+                  <tr>
+                    <td class="tm-product-name">{{prod.nom}}</td>
+                    <td class="tm-product-name">{{prod.categorie}}</td>
+                    <td>{{ prod.prix }}</td>
+                    <td>{{prod.expiration}}</td>
+                    <td>
+                      <a href="{% url 'dashboard:product-delete' prod.id%}" class="tm-product-delete-link">
+                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                      </a>
+                      <a href="{% url 'dashboard:product-update' prod.id%}" class="tm-product-delete-link">
+                          <i class="far fa-edit fa-sm" style="color: #ffffff;"></i>                      
+                      </a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+
+                </tbody>
+              </table>
+
+            </div>
+            <!-- table container -->
+            <a
+              href="{% url 'dashboard:add_product' %}"
+              class="btn btn-primary btn-block text-uppercase mb-3">Nouveau Produit</a>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 tm-block-col">
+          <div class="tm-bg-primary-dark tm-block tm-block-product-categories">
+            <h2 class="tm-block-title">Categories des Produits</h2>
+            <div class="tm-product-table-container">
+              <table class="table tm-table-small tm-product-table">
+                <tbody>
+                {% for cat in rows %}
+                  <tr>
+                    <td class="tm-product-name">{{cat.nom}}</td>
+                    <td class="text-center">
+                      <a href="{% url 'dashboard:delete-categorie' cat.id %}" class="tm-product-delete-link">
+                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                      </a>
+                      <a href="{% url 'dashboard:update-categorie' cat.id %}" class="tm-product-delete-link">
+                          <i class="far fa-edit fa-sm" style="color: #ffffff;"></i>
+                      </a>
+                    </td>
+                  </tr>
+                {% endfor %}
+
+                </tbody>
+              </table>
+            </div>
+            <!-- table container -->
+            <a href="{% url 'dashboard:add-category' %}" class="btn btn-primary btn-block text-uppercase mb-3">
+              Nouvelle Categorie
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endif %}
+{% endblock content %}
