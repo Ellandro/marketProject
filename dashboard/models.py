@@ -43,6 +43,7 @@ class Vente(models.Model):
     date_vente = models.DateField(null=True, auto_now_add=True)
 
     class Meta:
+        ordering = ('date_vente',)
         verbose_name_plural = 'Ventes'
 
     def __str__(self):
@@ -58,3 +59,12 @@ class Stock(models.Model):
     #categorie = models.ForeignKey(Categorie, on_delete=models.CASCADE,null=True)
     quantite = models.PositiveIntegerField(null=True)
     date = models.DateField(auto_now_add=True)
+
+class Receipt(models.Model):
+    vente = models.ForeignKey(Vente, on_delete=models.CASCADE)
+    personnel = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_creation = models.DateTimeField(auto_now_add=True)
+    contenu = models.TextField()
+
+    def __str__(self):
+        return f"Reçu pour la vente {self.vente.id} par {self.personnel.username}"

@@ -1,0 +1,325 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Mes visuels {% endblock title %}
+
+{% block content %}
+<main role="main" class="main-content">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <!-- <h2>Section title</h2> -->
+          <h2 class="h5 page-title">Tous les visuels</h2>
+          <div class="row">
+            <div class="col-md-6 col-xl-4 mb-4">
+              <div class="card shadow ">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col-3 text-center">
+                      <span class="circle circle-sm bg-primary-light">
+                        <i class="fe fe-16 fe-shopping-bag text-white mb-0"></i>
+                      </span>
+                    </div>
+                    <div class="col pr-0">
+                      <p class="h4 mb-2">Ventes </p>
+                      <span class="h5 mb-2 ">Total: {{nombre_total_ventes}}</span><br>
+                      <span class="h5 ">CA: {{total_chiffre_affaires}} Fcfa</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-xl-3 mb-4">
+              <div class="card shadow">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col-3 text-center">
+                      <span class="circle circle-sm bg-primary">
+                        <i class="fe fe-16 fe-shopping-cart text-white mb-0"></i>
+                      </span>
+                    </div>
+                    <div class="col pr-0">
+                      <p class="small text-muted mb-0">Orders</p>
+                      <span class="h3 mb-0">1,869</span>
+                      <span class="small text-success">+16.5%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-xl-5 mb-4">
+              <div class="card shadow">
+                <div class="card-body">
+                  <div class="row align-items-center">
+
+                    <div class="col">
+                      <p class="h4 text-muted mb-0">Meilleur Employée</p>
+                      <div class="col align-items-center no-gutters">
+                        <div class="col-md-12 col-lg">
+                          <p> Nom: <strong class=""> {{ best_employee.personnel__username }} </strong></p>
+                          <!-- <div class="progress progress-sm mt-2" style="height:3px">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 87%" aria-valuenow="87" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div> -->
+                        </div>
+                        <div class="col-auto">
+                          <span class="h5 mr-2 mb-0"> CA: {{ best_employee.total_sales }} Fcfa</span>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div> <!-- end section -->
+          <!-- info small box -->
+          <div class="row">
+            <div class="col-md-4 mb-4">
+              <div class="card shadow">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col">
+                      <span class="h2 mb-0">$1.2K</span>
+                      <p class="small text-muted mb-0">Monthly Sales</p>
+                      <span class="badge badge-pill badge-success">+15.5%</span>
+                    </div>
+                    <div class="col-auto">
+                      <span class="fe fe-32 fe-shopping-bag text-muted mb-0"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 mb-4">
+              <div class="card shadow">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col">
+                      <span class="h2 mb-0">1K+</span>
+                      <p class="small text-muted mb-0">Orders</p>
+                      <span class="badge badge-pill badge-success">+16.5%</span>
+                    </div>
+                    <div class="col-auto">
+                      <span class="fe fe-32 fe-clipboard text-muted mb-0"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 mb-4">
+              <div class="card shadow">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col">
+                      <span class="h2 mb-0">Categories</span>
+                      <p class="small  mb-0">Total : {{nombre_total_client}} </p>
+                      <!-- <span class="badge badge-pill badge-warning"></span> -->
+                    </div>
+                    <div class="col-auto">
+                      <span class="fe fe-32 fe-users text-muted mb-0"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> <!-- end section -->
+          <!-- widgets -->
+
+          <div>
+            <h2>Indicateurs de performance</h2>
+            <div class="row">
+              <canvas id="salesByDateChart" width="600" height="300"></canvas>
+              <canvas id="myChart" width="600" height="300"></canvas>
+              <div class="col-md-6">
+                <!-- Nombre total de ventes par mois -->
+
+              </div>
+              <div class="col-md-6">
+                <!-- Chiffre d'affaires par mois -->
+
+              </div>
+            </div>
+
+
+
+            <canvas id="bestProductChart" width="400" height="200"></canvas>
+
+            <!-- Meilleur employé -->
+            <canvas id="bestEmployeeChart" width="400" height="200"></canvas>
+
+            <!-- Top 5 des meilleurs clients -->
+            <div>
+              <h4>Top 10 des meilleurs categorie vendues</h4>
+              <canvas id="topClientsChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+
+
+        </div>
+      </div> <!-- .row -->
+    </div> <!-- .container-fluid -->
+
+  </main> <!-- main -->
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Meilleur produit vendu
+            var topClientsLabels = [{% for prod in best_product  %}"{{ prod.produit}}",{% endfor %}];
+            var topClientsData = [{% for prod in best_product  %}{{ prod.total_sold }},{% endfor %}];
+
+            var topClientsCtx = document.getElementById('bestProductChart').getContext('2d');
+            new Chart(topClientsCtx, {
+                type: 'bar',
+                data: {
+                    labels: topClientsLabels,
+                    datasets: [{
+                        label: 'Nombre d\'achats',
+                        data: topClientsData,
+                        backgroundColor: '#9BD0F5',
+
+                        borderWidth: 1
+                    }]
+                },
+               options: {
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    color: 'white' // Couleur du texte pour l'axe y
+                }
+            },
+            x: {
+                ticks: {
+                    color: '#FFF' // Couleur du texte pour l'axe x
+                }
+            }
+        }
+    }
+            });
+
+
+            // Meilleur employé
+            var bestEmployeeCtx = document.getElementById('bestEmployeeChart').getContext('2d');
+            new Chart(bestEmployeeCtx, {
+                type: 'bar',
+                data: {
+                    labels: ["{{ best_employee.personnel__username }} {{ best_employee.IdVendeur_prenoms }}"],
+                    datasets: [{
+                        label: 'Meileur Vendeur',
+                        data: [{{ best_employee.total_sales }}],
+                        backgroundColor: '#FF6384',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+
+            });
+
+            // Top 5 des meilleurs clients
+            var topClientsLabels = [{% for cat in categories_mieux_vendues %}"{{ cat.nom }}",{% endfor %}];
+            var topClientsData = [{% for cat in categories_mieux_vendues  %}{{ cat.total_ventes }},{% endfor %}];
+
+            var topClientsCtx = document.getElementById('topClientsChart').getContext('2d');
+            new Chart(topClientsCtx, {
+                type: 'bar',
+                data: {
+                    labels: topClientsLabels,
+                    datasets: [{
+                        label: 'Nombre d\'achats',
+                        data: topClientsData,
+                        backgroundColor: '#9BD0F5',
+
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                  indexAxis: 'y',
+
+                }
+            });
+        });
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+          // Nombre total de ventes par mois
+          var salesByDateCtx = document.getElementById('salesByDateChart').getContext('2d');
+          new Chart(salesByDateCtx, {
+              type: 'line',
+              data: {
+                  labels: {{ years_months|safe }},
+                  datasets: [{
+                      label: 'Nombre total de ventes',
+                      data: {{ total_sales|safe }},
+                      fill: false,
+                      borderColor: 'rgb(75, 192, 192)',
+                      borderWidth: 2
+                  }]
+              },
+              options: {
+                  scales: {
+                      y: {
+                          beginAtZero: true
+                      }
+                  }
+              }
+          });
+
+          var ctx = document.getElementById('myChart').getContext('2d');
+          var myChart = new Chart(ctx, {
+              type: 'bar',
+              data: {
+                  labels: {{ labels|safe }},
+                  datasets: [{
+                      label: 'Chiffre d\'affaires',
+                      data: {{ data|safe }},
+                      backgroundColor: 'rgb(75, 192, 192)',
+                      borderColor: 'rgba(75, 192, 192, 1)',
+                      borderWidth: 1
+                  }]
+              },
+              options: {
+                  scales: {
+
+                      y: {
+                          beginAtZero: true,
+
+                      }
+                  }
+              }
+          });
+
+      });
+
+    </script>
+
+  <script>
+    /* defind global options */
+    Chart.defaults.global.defaultFontFamily = base.defaultFontFamily;
+    Chart.defaults.global.defaultFontColor = colors.mutedColor;
+  </script>
+  <script src="{% static 'app/js/gauge.min.js' %}"></script>
+    <script src="{% static 'app/js/jquery.sparkline.min.js' %}"></script>
+    <script src="{% static 'app/js/apexcharts.min.js' %}"></script>
+    <script src="{% static 'app/js/apexcharts.custom.js' %}"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-56159088-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag()
+      {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'UA-56159088-1');
+    </script>
+{% endblock content%}

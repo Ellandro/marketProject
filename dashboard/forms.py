@@ -17,11 +17,17 @@ class CommandeForm(forms.ModelForm):
         model = Commande
         fields = ['produit','quantite']
 
+"""class VenteForm(forms.ModelForm):
+    class Meta:
+        model = Vente
+        exclude = ['personnel', 'montant_total']
+"""
+
+
 class VenteForm(forms.ModelForm):
     class Meta:
         model = Vente
-        exclude = ['personnel']
-
+        exclude = ['personnel', 'montant_total']
 class StockForm(forms.ModelForm):
     class Meta:
         model = Stock
@@ -34,3 +40,6 @@ class UploadFileForm(forms.Form):
 
 class SearchForm(forms.Form):
     search_query = forms.CharField(label='Recherche', max_length=100)
+class DataForm(forms.Form):
+    start = forms.DateTimeField(widget=forms.DateInput(attrs={'type':'date'}))
+    end = forms.DateTimeField(widget=forms.DateInput(attrs={'type':'date'}))

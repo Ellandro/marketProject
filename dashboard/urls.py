@@ -19,10 +19,15 @@ urlpatterns = [
     path('sale/', views.sales, name='sale'),
     path('add_sale/', views.add_sales, name='add_sale'),
     path('sale/delete/<int:pk>', views.sale_delete, name='delete-sale'),
+    path('save_sales/',views.save_sales, name='save_sales'),
 
     path('stock/', views.stock, name='stock'),
     path('add_stock/', views.add_stock, name='add_stock'),
     path('stock/update/<int:pk>', views.update_stock, name='update_stock'),
-    path('stock/delete/<int:pk>', views.delete_stock, name='delete_stock')
-
+    path('stock/delete/<int:pk>', views.delete_stock, name='delete_stock'),
+    path("visuel/", views.visuels, name='visuel'),
+    path('export-ventes-semaine-excel/',views.export_ventes_semaine_excel, name='ventes_semaine'),
+    #path('get-product-details/<int:product_id>/', views.get_product_details, name='get_product_details'),
+    path('generate_pdf/', views.generate_pdf, name='generate_pdf'),
+    path('chart/', views.charts, name='chart'),
 ]

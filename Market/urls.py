@@ -24,10 +24,11 @@ import user.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('dashboard.urls', 'dashboard-index')),
+    path('', include(('dashboard.urls','dashDjango.urls'), 'dashboard-index')),
     path('profile/', user_view.profile, name='user-profile'),
     path('profile/update', user_view.profile, name='user-profile-update'),
     path('register/', user_view.register,name='user-register'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='user-login'),
-    path('logout/', user.views.user_logout, name='user-logout')
+    path('logout/', user.views.user_logout, name='user-logout'),
+
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

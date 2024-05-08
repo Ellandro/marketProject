@@ -1,0 +1,101 @@
+<!-- receipt.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Reçu de Vente</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h2>Reçu de Vente</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>No. Vente</th>
+                <th>Produit</th>
+                <th>Quantité</th>
+                <th>Montant Total (Fcfa)</th>
+                <th>Date de Vente</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vente in ventes %}
+            <tr>
+                <td>#123465{{ vente.id }}</td>
+                <td>{{ vente.produit.nom }}</td>
+                <td>{{ vente.quantite }}</td>
+                <td>{{ vente.montant_total }}</td>
+                <td>{{ vente.date_vente }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="3">Montant Total</th>
+                <th>{{ total_amount }}</th>
+                <th></th>
+            </tr>
+        </tfoot>
+    </table>
+
+    <!-- Bouton pour télécharger le reçu -->
+    <button class="btn btn-primary btn-block text-uppercase mb-3" id="downloadReceiptButton">Télécharger le reçu</button>
+
+    <!-- Inclure la bibliothèque jsPDF -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'></script>
+
+    <script>
+        // Fonction pour générer le reçu
+        function generateReceipt() {
+            // Créer un nouveau document PDF
+            var doc = new jsPDF();
+
+            // Définir les détails du reçu
+            doc.text("Reçu de Vente", 10, 10);
+
+            var yOffset = 20;
+
+            // Parcourir toutes les ventes en attente
+            ventes.forEach(function(vente, index) {
+                // Ajouter les détails de la vente au PDF
+                var line = (index + 1) + ". Produit: " + vente.produit.nom + ", Quantité: " + vente.quantite + ", Montant total: " + vente.montant_total;
+                doc.text(line, 10, yOffset);
+                yOffset += 10;
+            });
+
+            // Ajouter le montant total au PDF
+            doc.text("Montant total: " + totalAmount, 10, yOffset + 10);
+
+            // Sauvegarder le PDF
+            doc.save("recu_vente.pdf");
+        }
+
+        // Gestionnaire d'événements pour le bouton de téléchargement du reçu
+        document.getElementById("downloadReceiptButton").addEventListener("click", function() {
+            generateReceipt(); // Appeler la fonction pour générer le reçu
+        });
+
+        // Définir les données de vente et le montant total
+        var ventes = {{ ventes | safe }}; // Assurez-vous que les données de vente sont formatées correctement
+
+        var totalAmount = "{{ total_amount }}"; // Assurez-vous que le montant total est formaté correctement
+        console.log(totalAmount);
+    </script>
+</body>
+</html>

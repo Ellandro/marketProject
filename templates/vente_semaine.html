@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Rapport hebdomadaire{% endblock %}
+
+{% block content %}
+
+<div class="row my-4">
+    <div class="col-md-6 offset-md-3">
+        <div class="border p-3 ">
+            <h3 class="white">Vente de la semaine</h3>
+            <hr>
+            <form method="POST">
+                <div class="alert alert-danger">
+                    <h4>Il n'y a pas de vente cette semaine</h4>
+                </div>
+
+                <a class="btn btn-secondary btn-sm" href="{% url 'dashboard:sale' %}">Retour</a>
+
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

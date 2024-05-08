@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <h1>Résumé des ventes en attente</h1>
+        <p>Total des ventes: {{ ventes|length }}</p>
+        <p>Total des montants: {{ total_montant }}</p>
+        <h2>Détails des ventes :</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Produit</th>
+                    <th>Quantité</th>
+                    <th>Montant total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vente in ventes %}
+                    <tr>
+                        <td>{{ vente.produit.nom }}</td>
+                        <td>{{ vente.quantite }}</td>
+                        <td>{{ vente.montant_total }}</td>
+                        <td><a href="{% url 'dashboard:edit_sale' vente.produit.id %}">Modifier</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'dashboard:add_sale' %}" class="btn btn-primary">Ajouter une vente</a>
+        <a href="{% url 'dashboard:save_sales' %}" class="btn btn-success">Enregistrer les ventes</a>
+    </div>
+{% endblock %}

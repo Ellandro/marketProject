@@ -25,7 +25,7 @@
     <div class="" id="home">
         <nav class="navbar navbar-expand-xl">
             <div class="container h-100">
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" href="{% url 'dashboard:dashboard' %}">
                     <h1 class="tm-site-title mb-0">Product Admin</h1>
                 </a>
                 <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -48,13 +48,13 @@
                                 aria-haspopup="true" aria-expanded="false">
                                 <i class="far fa-file-alt"></i>
                                 <span>
-                                    Reports <i class="fas fa-angle-down"></i>
+                                    Rapports <i class="fas fa-angle-down"></i>
                                 </span>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Daily Report</a>
-                                <a class="dropdown-item" href="#">Weekly Report</a>
-                                <a class="dropdown-item" href="#">Yearly Report</a>
+                                <a class="dropdown-item" href="#">Rapport journalier</a>
+                                <a class="dropdown-item" href="{% url 'dashboard:ventes_semaine' %}"> Rapport hebdomadaire</a>
+                                <a class="dropdown-item" href="{% url 'dashboard:visuel' %}">Rapport Annuel</a>
                             </div>
                         </li>
                         <li class="nav-item">
@@ -138,10 +138,19 @@
     <script src="{% static 'js/tooplate-scripts.js' %}"></script>
     <script>
          var dataFromDjango = {
-                                  labels: [{% for order in orders %}'{{ order.produit.nom }}', {% endfor %}],
-                                    values: [{% for order in orders %}{{ order.quantite }}, {% endfor %}],
+                                  labels: [{% for sales in ventes_par_annee %}'{{ sales.annee }}', {% endfor %}],
+                                    values: [{% for sales in ventes_par_annee%}{{sales.nombre_ventes }}, {% endfor %}],
                                     colors: ["#F7604D","#4ED6B8","#A8D582", "#D7D768","#9D66CC","#DB9C3F", "#3889FC"]
                                  };
+
+    var salesData2022 = JSON.parse('{{ sales_data_2022_json|escapejs }}');
+    var salesData2023 = JSON.parse('{{ sales_data_2023_json|escapejs }}');
+    var salesData2024 = JSON.parse('{{ sales_data_2024_json|escapejs }}');
+
+    // Maintenant vous pouvez utiliser salesData2022, salesData2023, salesData2024 dans votre JavaScript
+    console.log(salesData2022);
+    console.log(salesData2023);
+    console.log(salesData2024);
 
         Chart.defaults.global.defaultFontColor = 'white';
         let ctxLine,
@@ -159,7 +168,7 @@
         $(function () {
             drawLineChart(); // Line Chart
             drawBarChart(); // Bar Chart
-            drawPieChart( dataFromDjango); // Pie Chart
+            drawPieChart(dataFromDjango); // Pie Chart
 
             $(window).resize(function () {
                 updateLineChart();
